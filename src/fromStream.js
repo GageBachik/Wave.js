@@ -1,62 +1,72 @@
-function fromStream(stream, canvas_id, options = {}, connectDestination=true) {
+function fromStream(
+  stream,
+  canvas_id,
+  options = {},
+  connectDestination = false
+) {
+  this.current_stream.id = canvas_id;
+  this.current_stream.options = options;
 
-    this.current_stream.id = canvas_id;
-    this.current_stream.options = options;
+  let audioCtx, analyser, source;
+  if (!this.sources[stream.toString()]) {
+    audioCtx = new AudioContext();
+    analyser = audioCtx.createAnalyser();
 
-    let audioCtx, analyser, source;
-    if (!this.sources[stream.toString()]) {
-        audioCtx = new AudioContext();
-        analyser = audioCtx.createAnalyser();
-
-        source = audioCtx.createMediaStreamSource(stream);
-        source.connect(analyser);
-        if (connectDestination) {
-            source.connect(audioCtx.destination); //playback audio
-        }
-        
-        this.sources[stream.toString()] = {
-            "audioCtx": audioCtx,
-            "analyser": analyser,
-            "source": source
-        }
-    } else {
-        cancelAnimationFrame(this.sources[stream.toString()].animation);
-        audioCtx = this.sources[stream.toString()].audioCtx;
-        analyser = this.sources[stream.toString()].analyser;
-        source = this.sources[stream.toString()].source;
+    source = audioCtx.createMediaStreamSource(stream);
+    source.connect(analyser);
+    if (connectDestination) {
+      source.connect(audioCtx.destination); //playback audio
     }
 
-    analyser.fftsize = 32768;
-    let bufferLength = analyser.frequencyBinCount;
-    this.current_stream.data = new Uint8Array(bufferLength);
+    this.sources[stream.toString()] = {
+      audioCtx: audioCtx,
+      analyser: analyser,
+      source: source,
+    };
+  } else {
+    cancelAnimationFrame(this.sources[stream.toString()].animation);
+    audioCtx = this.sources[stream.toString()].audioCtx;
+    analyser = this.sources[stream.toString()].analyser;
+    source = this.sources[stream.toString()].source;
+  }
 
-    let self = this;
-    let frameCount = 1
+  analyser.fftsize = 32768;
+  let bufferLength = analyser.frequencyBinCount;
+  this.current_stream.data = new Uint8Array(bufferLength);
 
-    function renderFrame() {
-        self.current_stream.animation = requestAnimationFrame(self.current_stream.loop);
-        frameCount++;
-        self.sources[stream.toString()].animation = self.current_stream.animation;
-        analyser.getByteFrequencyData(self.current_stream.data);
+  let self = this;
+  let frameCount = 1;
 
-        self.visualize(self.current_stream.data, self.current_stream.id, self.current_stream.options, frameCount);
-    }
+  function renderFrame() {
+    self.current_stream.animation = requestAnimationFrame(
+      self.current_stream.loop
+    );
+    frameCount++;
+    self.sources[stream.toString()].animation = self.current_stream.animation;
+    analyser.getByteFrequencyData(self.current_stream.data);
 
-    this.current_stream.loop = renderFrame;
-    renderFrame();
+    self.visualize(
+      self.current_stream.data,
+      self.current_stream.id,
+      self.current_stream.options,
+      frameCount
+    );
+  }
 
+  this.current_stream.loop = renderFrame;
+  renderFrame();
 }
 
 function stopStream() {
-    cancelAnimationFrame(this.current_stream.animation);
+  cancelAnimationFrame(this.current_stream.animation);
 }
 
 function playStream() {
-    this.current_stream.loop();
+  this.current_stream.loop();
 }
 
 export default {
-    fromStream,
-    stopStream,
-    playStream
-}
+  fromStream,
+  stopStream,
+  playStream,
+};
