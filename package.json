@@ -1,7 +1,7 @@
 {
-  "name": "@foobar404/wave",
-  "version": "1.2.7",
-  "description": "Audio visualizer library for javascript (20+ designs).",
+  "name": "cryptolizers",
+  "version": "1.0.0",
+  "description": "Audio visualizer library for the cryptolizers project.",
   "main": "dist/bundle.cjs.js",
   "directories": {
     "test": "test"
@@ -18,20 +18,21 @@
     "wave",
     "sound",
     "music",
-    "canvas"
+    "canvas",
+    "cryptolizers"
   ],
-  "author": "Austin Michaud",
+  "author": "Gage Bachik",
   "license": "MIT",
   "files": [
     "dist/bundle.cjs.js"
   ],
-  "homepage": "https://foobar404.github.io/Wave.js/#/",
+  "homepage": "https://cryptolizers.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/foobar404/Wave.js.git"
+    "url": "https://github.com/GageBachik/Wave.js.git"
   },
   "bugs": {
-    "url": "https://github.com/foobar404/Wave.js/issues"
+    "url": "https://github.com/GageBachik/Wave.js/issues"
   },
   "devDependencies": {
     "@babel/core": "^7.10.4",
