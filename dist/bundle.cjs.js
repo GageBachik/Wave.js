@@ -1058,8 +1058,6 @@ var drawStitches = (functionContext) => {
   }
 };
 
-// import drawRoundLayers from "./visuals/drawRoundLayers.js";
-
 //options:type,colors,stroke
 function visualize(data, canvasId, options = {}, frame) {
   //make a clone of options
@@ -1073,12 +1071,22 @@ function visualize(data, canvasId, options = {}, frame) {
 
   if (!canvas) return;
 
+  // Get the device pixel ratio, falling back to 1.
+  let dpr = window.devicePixelRatio || 1;
+  // console.log("dpr", dpr);
+  // Get the size of the canvas in CSS pixels.
+  let rect = canvas.getBoundingClientRect();
+  // Give the canvas pixel dimensions of their CSS
+  // size * the device pixel ratio.
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
   let ctx = canvas.getContext("2d");
   let h = canvas.height;
   let w = canvas.width;
+  // Scale all drawing operations by the dpr, so you
+  // don't have to worry about the difference.
+  ctx.scale(dpr, dpr);
 
-  // Scale all drawing operations by the dpr for mobile
-  ctx.scale(devicePixelRatio, devicePixelRatio);
   ctx.strokeStyle = options.colors[0];
   ctx.lineWidth = options.stroke;
 
