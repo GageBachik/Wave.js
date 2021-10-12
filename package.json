@@ -1,6 +1,6 @@
 {
   "name": "cryptolizers",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Audio visualizer library for the cryptolizers project.",
   "main": "dist/bundle.cjs.js",
   "directories": {

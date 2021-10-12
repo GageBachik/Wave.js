@@ -1059,6 +1059,8 @@ var Wave = (function () {
     }
   };
 
+  // import drawRoundLayers from "./visuals/drawRoundLayers.js";
+
   //options:type,colors,stroke
   function visualize(data, canvasId, options = {}, frame) {
     //make a clone of options
