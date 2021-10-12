@@ -1,7 +1,5 @@
 'use strict';
 
-require('origamijs');
-
 function fromElement(element_id, canvas_id, options) {
   const globalAccessKey = [options.globalAccessKey || "$wave"];
   const initGlobalObject = (elementId) => {
@@ -1059,6 +1057,8 @@ var drawStitches = (functionContext) => {
     helper.drawLine(end, points.start[i + 1] || points.start[0]);
   }
 };
+
+// import drawRoundLayers from "./visuals/drawRoundLayers.js";
 
 //options:type,colors,stroke
 function visualize(data, canvasId, options = {}, frame) {

@@ -19,7 +19,7 @@ import drawFireworks from "./visuals/drawFireworks.js";
 import drawStatic from "./visuals/drawStatic.js";
 import drawWeb from "./visuals/drawWeb.js";
 import drawStitches from "./visuals/drawStitches.js";
-import drawRoundLayers from "./visuals/drawRoundLayers.js";
+// import drawRoundLayers from "./visuals/drawRoundLayers.js";
 
 //options:type,colors,stroke
 export default function visualize(data, canvasId, options = {}, frame) {
